@@ -54,19 +54,6 @@ The relevant sections in `app.js` are labelled with comments.
 | Exception handling | `try`/`catch` handles invalid availability and booking conflicts without stopping the application. |
 | Threads / concurrency | A browser `Web Worker` formats time labels in the background; Promises return those results to the interface. |
 
-## Deploy
-
-### Vercel
-
-1. Push this folder to a GitHub repository.
-2. Sign in to [Vercel](https://vercel.com/) with GitHub.
-3. Select **Add New → Project** and import the repository.
-4. Select **Other** as the framework preset. Leave the build command and output directory empty.
-5. Click **Deploy**.
-
-### Netlify
-
-Visit [Netlify Drop](https://app.netlify.com/drop) and drag the project folder onto the deployment page.
 
 ## Important Limitation
 
