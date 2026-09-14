@@ -4,8 +4,11 @@ function localDateString() {
   return new Date(today.getTime() - offset).toISOString().slice(0, 10);
 }
 
-// OOP + ENCAPSULATION: this class groups scheduling behavior with its data.
-// The #availability and #bookings fields are private, so outside code cannot change them directly.
+//=======================================================================================================
+//|| OOP + ENCAPSULATION: this class groups scheduling behavior with its data.                         ||
+//|| The #availability and #bookings fields are private, so outside code cannot change them directly.  ||
+//=======================================================================================================
+
 class Scheduler {
   #availability = new Map();
   #bookings = [];
@@ -23,7 +26,10 @@ class Scheduler {
 
   availableDates() { return [...this.#availability.keys()].sort(); }
 
-  // HIGHER-ORDER FUNCTION + LAMBDA EXPRESSION: map transforms each date into a schedule object.
+//=================================================================================================
+//|| HIGHER-ORDER FUNCTION + LAMBDA EXPRESSION: map transforms each date into a schedule object. ||
+//=================================================================================================
+
   allAvailability() { return this.availableDates().map(date => ({ date, ...this.#availability.get(date) })); }
 
   slotsFor(date) {
@@ -54,8 +60,10 @@ class Scheduler {
   #toTime(minutes) { return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`; }
 }
 
-// THREADS / CONCURRENCY: a Web Worker runs time-label formatting on a background thread.
-// The Promise callbacks reconnect its concurrent results to the user interface.
+//============================================================================================
+//|| THREADS / CONCURRENCY: a Web Worker runs time-label formatting on a background thread. ||
+//||  The Promise callbacks reconnect its concurrent results to the user interface.         ||
+//============================================================================================
 const workerSource = `onmessage = event => { const [id, time] = event.data; let [hour, minute] = time.split(':').map(Number); const period = hour >= 12 ? 'PM' : 'AM'; hour = hour % 12 || 12; postMessage([id, hour + ':' + String(minute).padStart(2, '0') + ' ' + period]); };`;
 const clockWorker = new Worker(URL.createObjectURL(new Blob([workerSource], { type: "text/javascript" })));
 const pendingLabels = new Map();
@@ -166,7 +174,11 @@ async function selectTime(time) {
 }
 
 function submitBooking() {
-  // EXCEPTION HANDLING: booking conflicts are caught so the screen can show a helpful message.
+
+  //================================================================================================
+  //|| EXCEPTION HANDLING: booking conflicts are caught so the screen can show a helpful message. ||
+  //================================================================================================
+  
   try {
     const booking = scheduler.book(selectedDate, selectedTime, { ...customerDetails, referenceCode: createReferenceCode(), summary: createVisitSummary(customerDetails) });
     closeModal("scheduleModal");
